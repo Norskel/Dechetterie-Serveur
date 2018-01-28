@@ -1,7 +1,4 @@
-#include "stdafx.h"
 #include "client.h"
-
-
 
 
 Client::Client(IPAddress^ ip, int port,int id)

@@ -1,6 +1,5 @@
 // ConsoleApplication1.cpp : fichier projet principal.
 
-#include "stdafx.h"
 #include "MainForm.h"
 
 using namespace System;
