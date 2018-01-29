@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -6,6 +8,9 @@
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
+	using namespace System::Xml;
+	using namespace System::Xml::Serialization;
 
 	using namespace System::Text;
 	using namespace System::Net;
@@ -375,29 +380,31 @@
 		this->Send(this->tbClientSend->Text);
 	}
 
+	private: System::Void checkState_Tick(System::Object^  sender, System::EventArgs^  e) {
+		if (_etat)
+		{
+			this->cbEncode->Enabled = false;
+			this->nUDPort->Enabled = false;
+			this->tbIp->Enabled = false;
+			this->btClientClose->Enabled = true;
+			this->btClientCo->Enabled = false;
+			lClientEtat->Text = "ON";
+			lClientEtat->BackColor = Color::Lime;
 
-private: System::Void checkState_Tick(System::Object^  sender, System::EventArgs^  e) {
-	if (_etat)
-	{
-		this->cbEncode->Enabled = false;
-		this->nUDPort->Enabled = false;
-		this->tbIp->Enabled = false;
-		this->btClientClose->Enabled = true;
-		this->btClientCo->Enabled = false;
-		lClientEtat->Text = "ON";
-		lClientEtat->BackColor = Color::Lime;
+
+		}
+		else
+		{
+			this->cbEncode->Enabled = true;
+			this->nUDPort->Enabled = true;
+			this->tbIp->Enabled = true;
+			this->btClientClose->Enabled = false;
+			this->btClientCo->Enabled = true;
+			lClientEtat->Text = "OFF";
+			lClientEtat->BackColor = Color::Red;
+		}
+		_etat = _client->Connected;
+		
 	}
-	else
-	{
-		this->cbEncode->Enabled = true;
-		this->nUDPort->Enabled = true;
-		this->tbIp->Enabled = true;
-		this->btClientClose->Enabled = false;
-		this->btClientCo->Enabled = true;
-		lClientEtat->Text = "OFF";
-		lClientEtat->BackColor = Color::Red;
-	}
-	_etat = _client->Connected;
-}
 };
 

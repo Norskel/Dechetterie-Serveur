@@ -8,6 +8,9 @@ TcpServer::TcpServer(IPAddress^ listenip, int listenPort)
 
 	_server = gcnew TcpListener(_listenIP, _listenPort);
 
+	NetworkInterface::GetAllNetworkInterfaces();
+	
+
 }
 
 void TcpServer::WaitClient()

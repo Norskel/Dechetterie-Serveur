@@ -3,12 +3,16 @@
 
 using namespace System;
 using namespace System::Net;
+using namespace System::Net::NetworkInformation;
 using namespace System::Net::Sockets;
 using namespace System::IO;
 using namespace System::Text;
 using namespace System::Threading;
 using namespace System::ComponentModel;
 using namespace System::Collections::Generic;
+
+using namespace System::Xml;
+using namespace System::Xml::Serialization;
 
 ref class TcpServer
 {
