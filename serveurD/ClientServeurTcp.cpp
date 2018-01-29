@@ -2,6 +2,11 @@
 
 
 
+ClientServeurTcp::ClientServeurTcp()
+{
+	throw gcnew System::NotImplementedException();
+}
+
 ClientServeurTcp::ClientServeurTcp(TcpClient^ cl)
 {
 	_client = cl;

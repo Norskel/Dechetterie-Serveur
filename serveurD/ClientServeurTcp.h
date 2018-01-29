@@ -16,6 +16,7 @@ private:
 	int _port;
 
 public:
+	ClientServeurTcp();
 	ClientServeurTcp(TcpClient^ cl);
 	IPAddress^ GetIP();
 	int GetPort();

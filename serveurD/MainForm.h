@@ -554,6 +554,11 @@
 				Console::WriteLine(ip->ToString());
 			}
 
+			cbSrvBaIp->Items->Add(IPAddress::Loopback);
+			cbSrvBrIp->Items->Add(IPAddress::Loopback);
+			cbSrvNfcIp->Items->Add(IPAddress::Loopback);
+
+
 		}
 		
 	}
