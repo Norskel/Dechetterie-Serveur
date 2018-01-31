@@ -223,6 +223,7 @@
 			// nUDPort
 			// 
 			this->nUDPort->Location = System::Drawing::Point(87, 48);
+			this->nUDPort->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 65536, 0, 0, 0 });
 			this->nUDPort->Name = L"nUDPort";
 			this->nUDPort->Size = System::Drawing::Size(104, 20);
 			this->nUDPort->TabIndex = 17;
@@ -403,7 +404,7 @@
 			lClientEtat->Text = "OFF";
 			lClientEtat->BackColor = Color::Red;
 		}
-		_etat = _client->Connected;
+		//_etat = _client->Connected;
 		
 	}
 };

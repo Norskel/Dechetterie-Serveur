@@ -7,7 +7,7 @@ using namespace System::Windows::Forms;
 
 void OnNewClient(System::Object ^sender, int e);
 int main(array<System::String ^> ^args)
-{
+e{
 
 	Console::WriteLine(L"Serveur Décheterie V1");
 

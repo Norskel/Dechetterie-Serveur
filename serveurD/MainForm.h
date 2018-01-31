@@ -177,6 +177,10 @@
 			// 
 			// dgvSrvBa
 			// 
+			this->dgvSrvBa->AllowUserToAddRows = false;
+			this->dgvSrvBa->AllowUserToDeleteRows = false;
+			this->dgvSrvBa->AllowUserToResizeColumns = false;
+			this->dgvSrvBa->AllowUserToResizeRows = false;
 			this->dgvSrvBa->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvSrvBa->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->baIp, this->baGroupe });
 			this->dgvSrvBa->Location = System::Drawing::Point(270, 19);
@@ -307,6 +311,9 @@
 			// 
 			// dgvSrvBr
 			// 
+			this->dgvSrvBr->AllowUserToDeleteRows = false;
+			this->dgvSrvBr->AllowUserToResizeColumns = false;
+			this->dgvSrvBr->AllowUserToResizeRows = false;
 			this->dgvSrvBr->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvSrvBr->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->brIp, this->brGroupe });
 			this->dgvSrvBr->Location = System::Drawing::Point(270, 19);
@@ -420,6 +427,9 @@
 			// 
 			// dgvSrvNfc
 			// 
+			this->dgvSrvNfc->AllowUserToDeleteRows = false;
+			this->dgvSrvNfc->AllowUserToResizeColumns = false;
+			this->dgvSrvNfc->AllowUserToResizeRows = false;
 			this->dgvSrvNfc->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvSrvNfc->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->NfcIp, this->NfcGroupe });
 			this->dgvSrvNfc->Location = System::Drawing::Point(270, 19);
@@ -553,13 +563,12 @@
 
 				Console::WriteLine(ip->ToString());
 			}
-
-			cbSrvBaIp->Items->Add(IPAddress::Loopback);
-			cbSrvBrIp->Items->Add(IPAddress::Loopback);
-			cbSrvNfcIp->Items->Add(IPAddress::Loopback);
-
-
 		}
+		cbSrvBaIp->Items->Add(IPAddress::Loopback);
+		cbSrvBrIp->Items->Add(IPAddress::Loopback);
+		cbSrvNfcIp->Items->Add(IPAddress::Loopback);
+
+		
 		
 	}
 };

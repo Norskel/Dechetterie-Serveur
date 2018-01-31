@@ -6,3 +6,8 @@ ClientBalance::ClientBalance()
 {
 
 }
+
+float ClientBalance::GetPoids()
+{
+	return 0.0f;
+}

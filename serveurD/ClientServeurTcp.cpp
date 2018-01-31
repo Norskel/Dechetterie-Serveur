@@ -12,6 +12,8 @@ ClientServeurTcp::ClientServeurTcp(TcpClient^ cl)
 	_client = cl;
 	_IP = ((IPEndPoint^)_client->Client->RemoteEndPoint)->Address;
 	_port = ((IPEndPoint^)_client->Client->RemoteEndPoint)->Port;
+
+
 	
 }
 
