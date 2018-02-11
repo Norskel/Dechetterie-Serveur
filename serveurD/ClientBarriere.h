@@ -1,8 +1,8 @@
 #pragma once
-#include "ClientServeurTcp.h"
+#include "TcpClientServeur.h"
 using namespace System;
 
-ref class ClientBarriere :public ClientServeurTcp
+ref class ClientBarriere :public TcpClientServeur
 {
 public:
 	ClientBarriere();

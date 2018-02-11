@@ -1,4 +1,5 @@
 #pragma once
+#include "TcpServer.h"
 
 
 	using namespace System;
@@ -25,6 +26,7 @@
 			//
 			//TODO: ajoutez ici le code du constructeur
 			//
+			_srvBalance->NewClient += gcnew System::EventHandler<int>(this, &MainForm::OnNewClient);
 		}
 
 	protected:
@@ -39,69 +41,35 @@
 			}
 		}
 	private: System::Windows::Forms::DataGridView^  dgvSrvBa;
-	protected:
-
-	protected:
-
+	protected: TcpServer^ _srvBalance;
 
 	private: System::Windows::Forms::Button^  btSrvBaStart;
 	private: System::Windows::Forms::Button^  btSrvBaStop;
 	private: System::Windows::Forms::NumericUpDown^  nSrvBaPort;
-
-
 	private: System::Windows::Forms::ComboBox^  cbSrvBaIp;
-
-
-
-
-
-
 	private: System::Windows::Forms::Button^  btSrvBaValid;
 	private: System::Windows::Forms::Label^  stateSrvBa;
-
-
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::GroupBox^  gbServBa;
 	private: System::Windows::Forms::GroupBox^  gbServBr;
 	private: System::Windows::Forms::DataGridView^  dgvSrvBr;
-
-
-
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Button^  btSrvBrStart;
-
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Button^  btSrvBrStop;
 	private: System::Windows::Forms::Label^  stateSrvBr;
 	private: System::Windows::Forms::NumericUpDown^  nSrvBrPort;
-
-
-
-
 	private: System::Windows::Forms::Button^  btSrvBrValid;
 	private: System::Windows::Forms::ComboBox^  cbSrvBrIp;
-
-
-
-
-
 	private: System::Windows::Forms::GroupBox^  gbServNFC;
 	private: System::Windows::Forms::DataGridView^  dgvSrvNfc;
-
-
-
 	private: System::Windows::Forms::Label^  label7;
 	private: System::Windows::Forms::Button^  btSrvNfcStart;
-
 	private: System::Windows::Forms::Label^  label8;
 	private: System::Windows::Forms::Button^  btSrvNfcStop;
 	private: System::Windows::Forms::Label^  stateSrvNfc;
 	private: System::Windows::Forms::NumericUpDown^  nSrvNfcPort;
-
-
-
-
 	private: System::Windows::Forms::Button^  btSrvNfcValide;
 	private: System::Windows::Forms::ComboBox^  cbSrvNfcIp;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  baIp;
@@ -110,16 +78,16 @@
 	private: System::Windows::Forms::DataGridViewComboBoxColumn^  brGroupe;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  NfcIp;
 	private: System::Windows::Forms::DataGridViewComboBoxColumn^  NfcGroupe;
+	private: System::Windows::Forms::Timer^  timerUpdateDataGrid;
 
-
-
+	private: System::ComponentModel::IContainer^  components;
 
 
 	private:
 		/// <summary>
 		/// Variable nécessaire au concepteur.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -128,6 +96,7 @@
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->dgvSrvBa = (gcnew System::Windows::Forms::DataGridView());
 			this->baIp = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->baGroupe = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
@@ -164,6 +133,7 @@
 			this->nSrvNfcPort = (gcnew System::Windows::Forms::NumericUpDown());
 			this->btSrvNfcValide = (gcnew System::Windows::Forms::Button());
 			this->cbSrvNfcIp = (gcnew System::Windows::Forms::ComboBox());
+			this->timerUpdateDataGrid = (gcnew System::Windows::Forms::Timer(this->components));
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvSrvBa))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nSrvBaPort))->BeginInit();
 			this->gbServBa->SuspendLayout();
@@ -208,6 +178,7 @@
 			this->btSrvBaStart->TabIndex = 1;
 			this->btSrvBaStart->Text = L"Start";
 			this->btSrvBaStart->UseVisualStyleBackColor = true;
+			this->btSrvBaStart->Click += gcnew System::EventHandler(this, &MainForm::btSrvBaStart_Click);
 			// 
 			// btSrvBaStop
 			// 
@@ -522,6 +493,11 @@
 			this->cbSrvNfcIp->Size = System::Drawing::Size(120, 21);
 			this->cbSrvNfcIp->TabIndex = 4;
 			// 
+			// timerUpdateDataGrid
+			// 
+			this->timerUpdateDataGrid->Enabled = true;
+			this->timerUpdateDataGrid->Tick += gcnew System::EventHandler(this, &MainForm::timerUpdateDataGrid_Tick);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -571,5 +547,24 @@
 		
 		
 	}
+			
+private: System::Void timerUpdateDataGrid_Tick(System::Object^  sender, System::EventArgs^  e) {
+	
+	for each (TcpClientServeur^ cl in _srvBalance->GetListClient())
+	{
+		dgvSrvBa->Rows->Add(cl->GetIP()->ToString());
+	}
+}
+		 void OnNewClient(System::Object ^sender, int e)
+		 {
+			 //throw gcnew System::NotImplementedException();
+		 }
+private: System::Void btSrvBaStart_Click(System::Object^  sender, System::EventArgs^  e) {
+	_srvBalance = gcnew TcpServer((IPAddress^)cbSrvBaIp->SelectedItem, (int)nSrvBaPort->Value);
+	_srvBalance->Start();
+}
 };
+
+
+
 

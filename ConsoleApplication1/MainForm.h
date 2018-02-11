@@ -51,6 +51,7 @@
 	private: System::Windows::Forms::Label^  lIP;
 	private: System::Windows::Forms::Label^  lPort;
 	private: List<ClientForm^>^ ct =  gcnew List<ClientForm^>;
+	private: System::Windows::Forms::Button^  btSetLocalHost;
 
 	protected:
 
@@ -72,6 +73,7 @@
 			this->nUDPort = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lIP = (gcnew System::Windows::Forms::Label());
 			this->lPort = (gcnew System::Windows::Forms::Label());
+			this->btSetLocalHost = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nUDPort))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -80,7 +82,7 @@
 			this->addClient->Location = System::Drawing::Point(12, 120);
 			this->addClient->Name = L"addClient";
 			this->addClient->Size = System::Drawing::Size(75, 23);
-			this->addClient->TabIndex = 2;
+			this->addClient->TabIndex = 4;
 			this->addClient->Text = L"Add";
 			this->addClient->UseVisualStyleBackColor = true;
 			this->addClient->Click += gcnew System::EventHandler(this, &MainForm::addClient_Click);
@@ -118,11 +120,22 @@
 			this->lPort->TabIndex = 5;
 			this->lPort->Text = L"Port Serveur";
 			// 
+			// btSetLocalHost
+			// 
+			this->btSetLocalHost->Location = System::Drawing::Point(147, 39);
+			this->btSetLocalHost->Name = L"btSetLocalHost";
+			this->btSetLocalHost->Size = System::Drawing::Size(75, 23);
+			this->btSetLocalHost->TabIndex = 2;
+			this->btSetLocalHost->Text = L"LocalHost";
+			this->btSetLocalHost->UseVisualStyleBackColor = true;
+			this->btSetLocalHost->Click += gcnew System::EventHandler(this, &MainForm::btSetLocalHost_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(188, 167);
+			this->ClientSize = System::Drawing::Size(275, 167);
+			this->Controls->Add(this->btSetLocalHost);
 			this->Controls->Add(this->lPort);
 			this->Controls->Add(this->lIP);
 			this->Controls->Add(this->nUDPort);
@@ -157,6 +170,9 @@ private: System::Void addClient_Click(System::Object^  sender, System::EventArgs
 	}
 	
 
+}
+private: System::Void btSetLocalHost_Click(System::Object^  sender, System::EventArgs^  e) {
+	tbIp->Text = "127.0.0.1";
 }
 };
 	

@@ -1,5 +1,5 @@
 #pragma once
-#include "ClientServeurTcp.h"
+#include "TcpClientServeur.h"
 #include "ClientBalance.h"
 #include "ClientBarriere.h"
 #include "ClientNfc.h"

@@ -142,7 +142,7 @@
     <ClInclude Include="ClientBalance.h" />
     <ClInclude Include="ClientBarriere.h" />
     <ClInclude Include="ClientNfc.h" />
-    <ClInclude Include="ClientServeurTcp.h" />
+    <ClInclude Include="TcpClientServeur.h" />
     <ClInclude Include="Groupe.h" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
@@ -158,7 +158,7 @@
     <ClCompile Include="ClientBalance.cpp" />
     <ClCompile Include="ClientBarriere.cpp" />
     <ClCompile Include="ClientNfc.cpp" />
-    <ClCompile Include="ClientServeurTcp.cpp" />
+    <ClCompile Include="TcpClientServeur.cpp" />
     <ClCompile Include="Groupe.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="serveurD.cpp" />

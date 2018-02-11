@@ -1,5 +1,5 @@
 #pragma once
-#include "ClientServeurTcp.h"
+#include "TcpClientServeur.h"
 
 using namespace System;
 using namespace System::Net;
@@ -19,8 +19,8 @@ ref class TcpServer
 private:
 
 	IPAddress^ _listenIP;
-	List<ClientServeurTcp^>^ _listClient = gcnew List<ClientServeurTcp^>;
-	TcpListener^ _server;
+	List<TcpClientServeur^>^ _listClient = gcnew List<TcpClientServeur^>;
+	Socket^ _server;
 	Boolean _isRunning;
 	
 	int _listenPort;
@@ -37,7 +37,7 @@ public:
 	int GetListenPort();
 	IPAddress^ GetListenIP();
 	Boolean GetState();
-	List<ClientServeurTcp^>^ GetListClient();
+	List<TcpClientServeur^>^ GetListClient();
 
 	event EventHandler<int>^ NewClient;
 	

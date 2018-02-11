@@ -1,8 +1,8 @@
 #pragma once
-#include "ClientServeurTcp.h"
+#include "TcpClientServeur.h"
 using namespace System;
 
-ref class ClientNfc :public ClientServeurTcp
+ref class ClientNfc :public TcpClientServeur
 {
 public:
 	ClientNfc();

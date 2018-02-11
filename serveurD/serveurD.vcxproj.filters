@@ -42,7 +42,7 @@
     <ClInclude Include="ClientNfc.h">
       <Filter>Fichiers d%27en-tête\Client</Filter>
     </ClInclude>
-    <ClInclude Include="ClientServeurTcp.h">
+    <ClInclude Include="TcpClientServeur.h">
       <Filter>Fichiers d%27en-tête\Client</Filter>
     </ClInclude>
   </ItemGroup>
@@ -61,9 +61,6 @@
     <ClCompile Include="TcpServer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="ClientServeurTcp.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="MainForm.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -77,6 +74,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="ClientNfc.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpClientServeur.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

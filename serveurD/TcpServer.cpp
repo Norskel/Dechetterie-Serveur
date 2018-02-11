@@ -6,28 +6,24 @@ TcpServer::TcpServer(IPAddress^ listenip, int listenPort)
 	_listenIP = listenip;
 	_listenPort = listenPort;
 
-	_server = gcnew TcpListener(_listenIP, _listenPort);
-
-	NetworkInterface::GetAllNetworkInterfaces();
+	_server = gcnew Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+	IPEndPoint^ local = gcnew IPEndPoint(listenip, listenPort);
+	_server->Bind(local);
 	
-
 }
 
 void TcpServer::WaitClient()
 {
 	while (_isRunning)
 	{
-		if (_server->Pending())
-		{
-			
-			TcpClient^ newClient = _server->AcceptTcpClient();
-			_listClient->Add(gcnew ClientServeurTcp(newClient));
-			NewClient(this, 5);
-		}
-		else
-		{
-			Thread::Sleep(100);
-		}
+		Socket^ cliSocket;
+		cliSocket = _server->Accept();
+
+		Console::WriteLine("NewClient {0}", (cliSocket->RemoteEndPoint)->ToString());
+		TcpClientServeur^ cST = gcnew TcpClientServeur(cliSocket);
+		_listClient->Add(cST);
+		NewClient(this, 5);
+
 	}
 }
 
@@ -36,8 +32,8 @@ Boolean TcpServer::Start()
 	try
 	{
 		Console::WriteLine("start");
+		_server->Listen(1);
 		_isRunning = true;
-		_server->Start();
 		_tWC = gcnew Thread(gcnew ThreadStart(this, &TcpServer::WaitClient));
 		_tWC->Start();
 	}
@@ -61,8 +57,7 @@ int TcpServer::GetListenPort()
 
 IPAddress ^ TcpServer::GetListenIP()
 {
-	throw gcnew System::NotImplementedException();
-	// TODO: insérer une instruction return ici
+	return _listenIP;
 }
 
 Boolean TcpServer::GetState()
@@ -70,7 +65,7 @@ Boolean TcpServer::GetState()
 	return Boolean();
 }
 
-List<ClientServeurTcp^>^ TcpServer::GetListClient()
+List<TcpClientServeur^>^ TcpServer::GetListClient()
 {
 	return _listClient;
 }

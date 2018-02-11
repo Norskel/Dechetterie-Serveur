@@ -41,10 +41,7 @@
 			
 			
 			
-			//TE = gcnew Thread(gcnew ThreadStart(this, &Client::TEd));
-			TR = gcnew Thread(gcnew ThreadStart(this, &ClientForm::TRd));
-			//TE->Name = "Thread Reception Client " + _id;
-			TR->Name = "Thread Envoie Client " + _id;
+
 			dPrintLogClient = gcnew DPrintLog(this,&ClientForm::printLog);
 
 			//
@@ -296,12 +293,13 @@
 				}
 				catch (Exception^ e)
 				{
-
+					break;
 				}
 
 				//this->tbClientLog->AppendText(data);
 				
 			}
+			this->Stop();
 		}
 		void Send(String^ msg)
 		{
@@ -336,10 +334,15 @@
 			
 			try
 			{
+				_client = gcnew TcpClient();
 				_client->Connect(_serveur);
 				
 				srClient = gcnew StreamReader(_client->GetStream(), Encoding::ASCII);
 				_stream = _client->GetStream();
+				//TE = gcnew Thread(gcnew ThreadStart(this, &Client::TEd));
+				TR = gcnew Thread(gcnew ThreadStart(this, &ClientForm::TRd));
+				//TE->Name = "Thread Reception Client " + _id;
+				TR->Name = "Thread Reception Client ";
 				TR->Start();
 				_etat = true;
 				//TE->Start();
@@ -352,6 +355,24 @@
 			}
 
 
+		}
+		void Stop()
+		{
+			try
+			{
+				_client->Close();
+				
+				TR->Abort();
+				_etat = false;
+
+				//TE->Start();
+			}
+			catch (Exception^ e)
+			{
+				this->Invoke(dPrintLogClient, "[Erreur] Deconnexion impossible \n");
+				Console::WriteLine("Erreur " + e);
+				
+			}
 		}
 		void printLog(String^ msg)
 		{
@@ -375,7 +396,7 @@
 
 	}
 	private: System::Void btClientClose_Click(System::Object^  sender, System::EventArgs^  e) {
-
+		this->Stop();
 	}
 	private: System::Void btClientSend_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Send(this->tbClientSend->Text);
