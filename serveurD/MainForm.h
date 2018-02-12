@@ -26,7 +26,7 @@
 			//
 			//TODO: ajoutez ici le code du constructeur
 			//
-			_srvBalance->NewClient += gcnew System::EventHandler<int>(this, &MainForm::OnNewClient);
+			
 		}
 
 	protected:
@@ -72,13 +72,16 @@
 	private: System::Windows::Forms::NumericUpDown^  nSrvNfcPort;
 	private: System::Windows::Forms::Button^  btSrvNfcValide;
 	private: System::Windows::Forms::ComboBox^  cbSrvNfcIp;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  baIp;
-	private: System::Windows::Forms::DataGridViewComboBoxColumn^  baGroupe;
+
+
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  brIp;
 	private: System::Windows::Forms::DataGridViewComboBoxColumn^  brGroupe;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  NfcIp;
 	private: System::Windows::Forms::DataGridViewComboBoxColumn^  NfcGroupe;
 	private: System::Windows::Forms::Timer^  timerUpdateDataGrid;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  baIp;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  baPort;
+	private: System::Windows::Forms::DataGridViewComboBoxColumn^  baGroupe;
 
 	private: System::ComponentModel::IContainer^  components;
 
@@ -98,8 +101,6 @@
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->dgvSrvBa = (gcnew System::Windows::Forms::DataGridView());
-			this->baIp = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->baGroupe = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
 			this->btSrvBaStart = (gcnew System::Windows::Forms::Button());
 			this->btSrvBaStop = (gcnew System::Windows::Forms::Button());
 			this->nSrvBaPort = (gcnew System::Windows::Forms::NumericUpDown());
@@ -134,6 +135,9 @@
 			this->btSrvNfcValide = (gcnew System::Windows::Forms::Button());
 			this->cbSrvNfcIp = (gcnew System::Windows::Forms::ComboBox());
 			this->timerUpdateDataGrid = (gcnew System::Windows::Forms::Timer(this->components));
+			this->baIp = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->baPort = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->baGroupe = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvSrvBa))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nSrvBaPort))->BeginInit();
 			this->gbServBa->SuspendLayout();
@@ -152,23 +156,14 @@
 			this->dgvSrvBa->AllowUserToResizeColumns = false;
 			this->dgvSrvBa->AllowUserToResizeRows = false;
 			this->dgvSrvBa->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvSrvBa->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(2) { this->baIp, this->baGroupe });
+			this->dgvSrvBa->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
+				this->baIp, this->baPort,
+					this->baGroupe
+			});
 			this->dgvSrvBa->Location = System::Drawing::Point(270, 19);
 			this->dgvSrvBa->Name = L"dgvSrvBa";
 			this->dgvSrvBa->Size = System::Drawing::Size(322, 124);
 			this->dgvSrvBa->TabIndex = 0;
-			// 
-			// baIp
-			// 
-			this->baIp->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
-			this->baIp->HeaderText = L"IP";
-			this->baIp->Name = L"baIp";
-			// 
-			// baGroupe
-			// 
-			this->baGroupe->HeaderText = L"Groupe";
-			this->baGroupe->Name = L"baGroupe";
-			this->baGroupe->Width = 150;
 			// 
 			// btSrvBaStart
 			// 
@@ -192,6 +187,7 @@
 			// nSrvBaPort
 			// 
 			this->nSrvBaPort->Location = System::Drawing::Point(122, 101);
+			this->nSrvBaPort->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 65536, 0, 0, 0 });
 			this->nSrvBaPort->Name = L"nSrvBaPort";
 			this->nSrvBaPort->Size = System::Drawing::Size(120, 20);
 			this->nSrvBaPort->TabIndex = 3;
@@ -356,6 +352,7 @@
 			// nSrvBrPort
 			// 
 			this->nSrvBrPort->Location = System::Drawing::Point(122, 101);
+			this->nSrvBrPort->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 65536, 0, 0, 0 });
 			this->nSrvBrPort->Name = L"nSrvBrPort";
 			this->nSrvBrPort->Size = System::Drawing::Size(120, 20);
 			this->nSrvBrPort->TabIndex = 3;
@@ -472,6 +469,7 @@
 			// nSrvNfcPort
 			// 
 			this->nSrvNfcPort->Location = System::Drawing::Point(122, 101);
+			this->nSrvNfcPort->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 65536, 0, 0, 0 });
 			this->nSrvNfcPort->Name = L"nSrvNfcPort";
 			this->nSrvNfcPort->Size = System::Drawing::Size(120, 20);
 			this->nSrvNfcPort->TabIndex = 3;
@@ -497,6 +495,24 @@
 			// 
 			this->timerUpdateDataGrid->Enabled = true;
 			this->timerUpdateDataGrid->Tick += gcnew System::EventHandler(this, &MainForm::timerUpdateDataGrid_Tick);
+			// 
+			// baIp
+			// 
+			this->baIp->AutoSizeMode = System::Windows::Forms::DataGridViewAutoSizeColumnMode::Fill;
+			this->baIp->HeaderText = L"IP";
+			this->baIp->Name = L"baIp";
+			// 
+			// baPort
+			// 
+			this->baPort->HeaderText = L"Port";
+			this->baPort->Name = L"baPort";
+			this->baPort->Visible = false;
+			// 
+			// baGroupe
+			// 
+			this->baGroupe->HeaderText = L"Groupe";
+			this->baGroupe->Name = L"baGroupe";
+			this->baGroupe->Width = 150;
 			// 
 			// MainForm
 			// 
@@ -552,15 +568,34 @@ private: System::Void timerUpdateDataGrid_Tick(System::Object^  sender, System::
 	
 	for each (TcpClientServeur^ cl in _srvBalance->GetListClient())
 	{
-		dgvSrvBa->Rows->Add(cl->GetIP()->ToString());
+		bool find = false;
+
+		for each(DataGridViewRow^ row in dgvSrvBa->Rows)
+		{
+			if (row->Cells[0]->Value->ToString()->Equals(cl->GetIP()->ToString()))
+			{
+				find = true;
+				break;
+			}
+		}
+
+		if (!find)
+		{
+			dgvSrvBa->Rows->Add(cl->GetIP()->ToString());
+
+		}
+
 	}
+
+	//Console::WriteLine(dgvSrvBa->Rows->GetNextRow(1,System::Windows::Forms::DataGridView::da);
 }
-		 void OnNewClient(System::Object ^sender, int e)
-		 {
-			 //throw gcnew System::NotImplementedException();
-		 }
+void OnNewClient(System::Object ^sender, int e)
+{
+	Console::WriteLine("NewClient");
+}
 private: System::Void btSrvBaStart_Click(System::Object^  sender, System::EventArgs^  e) {
 	_srvBalance = gcnew TcpServer((IPAddress^)cbSrvBaIp->SelectedItem, (int)nSrvBaPort->Value);
+	_srvBalance->NewClient += gcnew System::EventHandler<int>(this, &MainForm::OnNewClient);
 	_srvBalance->Start();
 }
 };

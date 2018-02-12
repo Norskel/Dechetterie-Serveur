@@ -19,7 +19,7 @@ ref class TcpServer
 private:
 
 	IPAddress^ _listenIP;
-	List<TcpClientServeur^>^ _listClient = gcnew List<TcpClientServeur^>;
+	static List<TcpClientServeur^>^ _listClient = gcnew List<TcpClientServeur^>;
 	Socket^ _server;
 	Boolean _isRunning;
 	
