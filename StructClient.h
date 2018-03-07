@@ -1,4 +1,5 @@
 #pragma once
+
 using namespace System;
 using namespace System::Net;
 using namespace System::Net::Sockets;
@@ -34,8 +35,11 @@ public:
 			_clientSocket->Send(data);
 			return true;
 		}
-		catch (...)
+		catch (Exception^e)
 		{
+
+				Console::WriteLine("[ Client ][ Send ]" + e);
+			
 			return false;
 		}
 	}
@@ -48,9 +52,11 @@ public:
 			_clientSocket->Receive(data);
 			return data;
 		}
-		catch (...)
+		catch (Exception^e)
 		{
 
+				Console::WriteLine("[ Client ][ Receive ]" + e);
+			
 		}
 	}
 	

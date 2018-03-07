@@ -1,8 +1,8 @@
 #pragma once
 #include "Serveur.h"
 #include "DataBddProxy.h"
-#include "Protocole.h"
 #include "Dechetterie.h"
+#include "Protocole\Protocole.h"
 
 
 using namespace System;
@@ -16,6 +16,9 @@ private:
 	Serveur^ _srv;
 	Thread^ _tEntree;
 	void ThreadEntree();
+	array<Byte>^ ReceptionPhoto(Client ^ cl);
+	String ^ WaitAccesDemand(Client ^ cl);
+	int WaitDechetType(Client ^ cl);
 	DataBddProxy^ _bdd;
 
 	Protocole^ protocole;
@@ -23,6 +26,7 @@ private:
 	Client^ _ClientBarrière;
 	Client^ _ClientBalance;
 	Client^ _ClientRFID;
+	int getPoids(Client ^ cl);
 	void getClientFromList(List<Client^>^ l);
 
 public:

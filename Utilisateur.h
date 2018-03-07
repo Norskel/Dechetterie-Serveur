@@ -1,5 +1,7 @@
 #pragma once
 using namespace System;
+using namespace System::Drawing;
+
 ref class Utilisateur
 {
 private:
@@ -10,11 +12,16 @@ private:
 	String^ _RFID_Card;
 	DateTime _dtArrivée;
 	int ID_User;
+	int _poidsEntree;
+
 public:
-	Utilisateur(String^ nom, String^prenom, int tdechet);
-	Utilisateur(String^ nom, String^prenom, int tdechet, String^  rfid);
-	Utilisateur(String^ nom, String^prenom, int tdechet, String^  rfid, array<Byte>^p);
+	Utilisateur(String^ nom, String^prenom, int tdechet, String^  rfid, int poids, array<Byte>^p);
 	DateTime getDuree();
+	String^ getRFIDID();
+	String^ getNom();
+	String^ getPrenom();
+
+
 
 };
 

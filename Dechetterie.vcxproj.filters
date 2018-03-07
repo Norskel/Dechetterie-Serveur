@@ -16,6 +16,9 @@
     <Filter Include="Struct">
       <UniqueIdentifier>{36d93681-7aed-442a-afdd-a8e795a06e1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Protocole">
+      <UniqueIdentifier>{7c53accc-abcd-41bb-b7c0-235f9103aabe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -69,14 +72,14 @@
     <ClInclude Include="Serveur.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Protocole.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Protocole\Protocole.h">
+      <Filter>Fichiers d%27en-tête\Protocole</Filter>
     </ClInclude>
-    <ClInclude Include="StructTypeMessage.h">
-      <Filter>Struct</Filter>
+    <ClInclude Include="Protocole\StructProtocolMsg.h">
+      <Filter>Fichiers d%27en-tête\Protocole</Filter>
     </ClInclude>
-    <ClInclude Include="StructProtocolMsg.h">
-      <Filter>Struct</Filter>
+    <ClInclude Include="Protocole\StructTypeMessage.h">
+      <Filter>Fichiers d%27en-tête\Protocole</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

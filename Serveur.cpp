@@ -53,11 +53,12 @@ void Serveur::WaitClient()
 
 			{
 				IPAddress^ IPAdresseList = _listClient[i]->getIP();
+				int idGroupe = _listClient[i]->getGroupe();
 				Console::Write("List : " + _listClient[i]->getIP());
 				Console::WriteLine("Address : " + ipAdresseClient);
 				// if ((IPAddress^)(((IPEndPoint^)cliSocket->RemoteEndPoint)->Address) == _listClient[i]->getIPAdresse())
 
-				if (ipAdresseClient->ToString() == IPAdresseList->ToString())
+				if (ipAdresseClient->ToString() == IPAdresseList->ToString() && idGroupe == _groupe)
 				{
 					_listClient[i]->setSocket(cliSocket);
 					_listClient[i]->setState(true);

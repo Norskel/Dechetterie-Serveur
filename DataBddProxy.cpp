@@ -21,12 +21,14 @@ void DataBddProxy::_pingServeur()
 			_tableTask->Clear();
 
 		}
-		Console::WriteLine();
+		Console::WriteLine("[ BDD ] Connection OK");
 					
 	}
 	catch (...)
 	{
 		_serveurPresent = false;
+		Console::WriteLine("[ BDD ] Problème de connection");
+
 	}
 	con->Close();
 }
@@ -37,6 +39,8 @@ bool DataBddProxy::getStateServeur()
 
 DataBddProxy::DataBddProxy(String^ ip, String^ port, String^ db, String^ user, String^ password)
 {
+	Console::WriteLine("[ BDD ] Première instanciation");
+
 	if (port == "")
 	{
 		_infoConnection = "SERVER=" + ip + "; DATABASE=" + db + "; UID=" + user + "; PASSWORD=" + password + "";
@@ -74,19 +78,20 @@ List<DataEntree^>^ DataBddProxy::getTableEntree()
 	{
 		List<DataEntree^>^ t = gcnew List<DataEntree^>;
 		MySqlConnection^ con = gcnew MySqlConnection(_infoConnection);
+		con->Open();
 		MySqlCommand^ request = gcnew MySqlCommand("SELECT * FROM Entree;", con);
 		MySqlDataReader^ DR = request->ExecuteReader();
 
 		while (DR->Read())
 		{
-			DataEntree^ et = gcnew DataEntree();
-			et->ID = (int)DR["ID"];
-			et->ID_User = (int)DR["ID_Utilisateur"];
-			et->ID_Dechet = (int)DR["ID_Dechet"];
-			et->Poids = (int)DR["Poids"];
-			et->dt = DateTime::Parse((String^)DR["DateTime"]);
+			DataEntree^ dt = gcnew DataEntree();
+			dt->ID =  Convert::ToInt64(DR["ID"]);
+			dt->ID_User = Convert::ToInt64(DR["Utilisateur_ID"]);
+			dt->ID_Dechet = Convert::ToInt64(DR["TypeDechet_ID"]);
+			dt->Poids = Convert::ToInt64(DR["Poids"]);
+			dt->dt = DateTime::Parse(Convert::ToString(DR["DateTime"]));
 
-			t->Add(et);
+			t->Add(dt);
 
 		}
 		con->Close();
@@ -103,16 +108,14 @@ List<DataUser^>^ DataBddProxy::getTableUser()
 		MySqlConnection^ con = gcnew MySqlConnection(_infoConnection);
 		con->Open();
 		MySqlCommand^ request = gcnew MySqlCommand("SELECT * FROM Utilisateur;", con);
-
-
 		MySqlDataReader^ DR = request->ExecuteReader();
 		while (DR->Read())
 		{
 			DataUser^ et = gcnew DataUser();
-			et->ID = (int)DR["ID"];
-			et->Prenom = (String^)DR["Prenom"];
-			et->Nom = (String^)DR["Nom"];
-			et->ID_RFID = (String^)DR["ID_RFID"];
+			et->ID = Convert::ToInt64(DR["ID"]);
+			et->Prenom = Convert::ToString(DR["Prenom"]);
+			et->Nom = Convert::ToString(DR["Nom"]);
+			et->ID_RFID = Convert::ToString(DR["ID_RFID"]);
 			t->Add(et);
 
 		}
@@ -136,8 +139,8 @@ List<DataDechet^>^ DataBddProxy::getTableDechet()
 		while (DR->Read())
 		{
 			DataDechet^ et = gcnew DataDechet();
-			et->ID = (int)DR["ID"];
-			et->Nom = (String^)DR["Nom_Dechet"];
+			et->ID = Convert::ToInt64(DR["ID"]);
+			et->Nom = Convert::ToString(DR["Nom_Dechet"]);
 			t->Add(et);
 			//t->Add(gcnew User((int)DR["ID"], (String^)DR["Nom"],(String^)DR["Prenom"], (String^)DR["ID_RFID"]));
 

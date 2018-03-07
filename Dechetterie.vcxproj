@@ -132,6 +132,7 @@
     <Reference Include="MySql.Data, Version=6.10.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +142,9 @@
     <ClInclude Include="DataBdd.h" />
     <ClInclude Include="DataBddProxy.h" />
     <ClInclude Include="Entree.h" />
-    <ClInclude Include="Protocole.h" />
+    <ClInclude Include="Protocole\Protocole.h" />
+    <ClInclude Include="Protocole\StructProtocolMsg.h" />
+    <ClInclude Include="Protocole\StructTypeMessage.h" />
     <ClInclude Include="Serveur.h" />
     <ClInclude Include="Sortie.h" />
     <ClInclude Include="StructClient.h" />
@@ -154,8 +157,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StructDataHistorique.h" />
     <ClInclude Include="StructDataUser.h" />
-    <ClInclude Include="StructProtocolMsg.h" />
-    <ClInclude Include="StructTypeMessage.h" />
     <ClInclude Include="Utilisateur.h" />
   </ItemGroup>
   <ItemGroup>

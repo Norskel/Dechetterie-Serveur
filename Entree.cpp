@@ -25,51 +25,47 @@ void Entree::ThreadEntree()
 		getClientFromList(Dechetterie::GetListClient());
 		//connected = _ClientBalance->getState() && _ClientBarrière->getState() && _ClientRFID->getState();
 		connected = _ClientRFID->getState();
+		//connected = _ClientBalance->getState();
 		
 	}
 	while (!connected);
+
+
 	while (true)
 	{
 		getClientFromList(Dechetterie::GetListClient());
 		try
 		{
 			//===================================== Attente de Demande d'accès ========================================================================
-			ProtocolMsg^ msgRev = gcnew ProtocolMsg();
-			do
-			{
-				msgRev = protocole->translateReceive(_ClientRFID->Receive());
-				Console::WriteLine("Type = " + msgRev->type);
-
-			} while (msgRev->type != 7);
-			Console::WriteLine("[Entree] Demande d'accès avec l'id RFID " + Encoding::Default->GetString(msgRev->data1));
+			String^ rfid_id = WaitAccesDemand(_ClientRFID);
+			Console::WriteLine("[Entree] Demande d'accès avec l'id RFID " + rfid_id);
 			//===================================== Demande d'accès ====================================================================================
 			try
 			{
 				//Console::WriteLine("[Entree] Demande d'accès avec l'id RFID " + Encoding::Default->GetString(msgRev->data1));
-				_bdd->getUserByIdRFID(Encoding::Default->GetString(msgRev->data1)); 
+				DataUser^ user = _bdd->getUserByIdRFID(rfid_id);
 				Console::WriteLine("[Entree] Accès autorisé");
 				_ClientRFID->Send(protocole->RetourRFIDAccesDemand(true));
 
-				ProtocolMsg^ msgRev = gcnew ProtocolMsg();
-				int i = 0;
-				do
-				{
-					i++;
-					msgRev = protocole->translateReceive(_ClientRFID->Receive());
-					Console::WriteLine("Type = " + msgRev->type);
-					if (i > 5)
-					{
-						break;
-					}
+				int dechet_type = WaitDechetType(_ClientRFID);
+	
+				int poids = getPoids(_ClientBalance);
+			
+				array<Byte>^ photo = ReceptionPhoto(_ClientRFID);
+				Dechetterie::addUtilisateur(rfid_id, dechet_type, poids, photo);
 
-				} while (msgRev->type != 9);
+				_ClientBarrière->Send(protocole->OuvrirBarriere());
+				Thread::Sleep(2000);
+				_ClientBarrière->Send(protocole->FermerBarriere());
 				
-
-
+				
 			}
-			catch (...)
+			catch (Exception^ e)
 			{
-
+				if (Dechetterie::Debug)
+				{
+					Console::WriteLine("[Entree] " + e);
+				}
 				Console::WriteLine("[Entree] Accès Refusé");
 				_ClientRFID->Send(protocole->RetourRFIDAccesDemand(false));
 			}
@@ -78,11 +74,101 @@ void Entree::ThreadEntree()
 		}
 		catch (...)
 		{
-			Console::WriteLine("[Entree] Fin de procédure");
+			
 		}
+		Console::WriteLine("[Entree] Fin de procédure");
 	}
 }
 
+array<Byte>^ Entree::ReceptionPhoto(Client^ cl)
+{
+	cl->Send(protocole->GetPhoto());
+
+	ProtocolMsg^ msgRev = gcnew ProtocolMsg();
+	do
+	{
+		msgRev = protocole->translateReceive(_ClientRFID->Receive());
+		Console::WriteLine("Type = " + msgRev->type);
+
+	} while (msgRev->type != protocole->GetTypeProtocoleByID("RfPhotoInit"));
+
+	int nbPacket = msgRev->getData1Int();
+	Console::WriteLine("[ Reception Photo ] Initialisation de la reception de la Photo ");
+	Console::WriteLine("[ Reception Photo ] Nombre de packet à recevoir : " + nbPacket);
+
+	array<Byte>^ photo = gcnew array<Byte>(1024 * nbPacket);
+
+	int iPhoto = 0;
+	ProtocolMsg^ receptionMsg;
+	do
+	{
+		receptionMsg = protocole->translateReceive(cl->Receive());
+		if (receptionMsg->type == protocole->GetTypeProtocoleByID("RfPhotoSend"))
+		{
+			for (int i = 0; i < receptionMsg->data2->Length; i++)
+			{
+
+
+				photo[iPhoto] = receptionMsg->data2[i];
+				iPhoto++;
+
+
+
+			}
+			if (receptionMsg->getData1Int() == nbPacket)
+			{
+				break;
+			}
+		}
+
+
+	} while (receptionMsg->type != protocole->GetTypeProtocoleByID("RfPhotoEnd"));
+
+	Console::WriteLine("[ Reception Photo ] Fin de transmission ");
+	Console::WriteLine("[ Reception Photo ] Taille de la photo recu en octet (Byte) : " + iPhoto);
+
+	return photo;
+}
+String^ Entree::WaitAccesDemand(Client^ cl)
+{
+	ProtocolMsg^ msgRev = gcnew ProtocolMsg();
+	do
+	{
+
+		msgRev = protocole->translateReceive(cl->Receive());
+		Console::WriteLine("Type = " + msgRev->type);
+
+	} while (msgRev->type != protocole->GetTypeProtocoleByID("RfDAcces"));
+
+	return msgRev->getData1String();
+}
+int Entree::WaitDechetType(Client^ cl)
+{
+	ProtocolMsg^ msgRev = gcnew ProtocolMsg();
+	do
+	{
+		msgRev = protocole->translateReceive(cl->Receive());
+		Console::WriteLine("Type = " + msgRev->type);
+
+	} while (msgRev->type != protocole->GetTypeProtocoleByID("RfDechet"));
+
+	return msgRev->getData1Int();
+}
+int Entree::getPoids(Client^ cl)
+{
+	cl->Send(protocole->GetBalancePoids());
+	ProtocolMsg^ msgRev = gcnew ProtocolMsg();
+	do
+	{
+
+		msgRev = protocole->translateReceive(cl->Receive());
+		Console::WriteLine("Type = " + msgRev->type);
+	
+
+
+	} while (msgRev->type != protocole->GetTypeProtocoleByID("baRDPoids"));
+	return msgRev->getData1Int();
+}
 void Entree::getClientFromList(List<Client^>^ l)
 {
 	for each (Client^ var in l)
