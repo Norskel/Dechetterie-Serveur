@@ -137,54 +137,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DataBdd.h" />
-    <ClInclude Include="DataBddProxy.h" />
-    <ClInclude Include="Entree.h" />
-    <ClInclude Include="Enum.h" />
-    <ClInclude Include="Protocole\Protocole.h" />
-    <ClInclude Include="Protocole\StructProtocolMsg.h" />
-    <ClInclude Include="Protocole\StructTypeMessage.h" />
-    <ClInclude Include="Serveur.h" />
-    <ClInclude Include="Sortie.h" />
-    <ClInclude Include="StructClient.h" />
-    <ClInclude Include="StructBddTask.h" />
-    <ClInclude Include="StructDataConfigServeur.h" />
-    <ClInclude Include="StructDataDechet.h" />
-    <ClInclude Include="StructDataEntree.h" />
-    <ClInclude Include="Dechetterie.h" />
-    <ClInclude Include="IDataBdd.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StructDataHistorique.h" />
-    <ClInclude Include="StructDataUser.h" />
-    <ClInclude Include="Utilisateur.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="DataBdd.cpp" />
-    <ClCompile Include="DataBddProxy.cpp" />
-    <ClCompile Include="Dechetterie.cpp" />
-    <ClCompile Include="Entree.cpp" />
-    <ClCompile Include="Serveur.cpp" />
-    <ClCompile Include="Sortie.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="app.ico" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
